@@ -38,7 +38,6 @@ app.get('/prayers', (req, res, next) => {
 app.post('/prayer', (req, res, next) => {
   const prayer = {
     title: req.body.title,
-    imageUrl: '',
     deleted: 0,
     user: req.id,
     created_at: new Date().toDateString()
@@ -72,9 +71,28 @@ app.get('/events', (req, res, next) => {
 });
 
 app.post('/event', (req, res, next) => {
-  console.log(req.body);
-  res.status(201).json({
-    message: 'Event created successfully!'
+  const event = {
+    title: req.body.title,
+    imageUrl: '',
+    description: req.body.description,
+    date: req.body.date,
+    deleted: 0,
+    user: req.id,
+    created_at: new Date().toDateString()
+  };
+  events.insert(event, (err, event) => {
+    if (err) {
+      res.status(500).json({
+        error: err
+      });
+    }
+    let added_event = {
+      title: event.title,
+      description: event.description,
+      date: event.date,
+      id: event._id
+    };
+    res.status(201).json(added_event);
   });
 });
 
