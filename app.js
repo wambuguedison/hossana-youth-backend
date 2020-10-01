@@ -147,4 +147,10 @@ app.put('/event/:id', (req, res, next) => {
   });
 });
 
+app.delete('/event/:id', (req, res, next) => {
+  events.remove({ _id: req.params.id }, {}, (err, numRemoved) => {
+    res.status(204).send('event deleted successfully');
+  });
+});
+
 module.exports = app;
