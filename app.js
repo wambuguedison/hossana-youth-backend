@@ -12,8 +12,8 @@ app.use(
   })
 );
 
-const prayers = new nedb({ filename: './prayers.db', autoload: true });
-const events = new nedb({ filename: './events.db', autoload: true });
+const events = require('./routes/events');
+app.use('', events);
 
 app.get('/', (req, res, next) => {
   res.status(200).json({
@@ -79,77 +79,6 @@ app.put('/prayer/:id', (req, res, next) => {
 app.delete('/prayer/:id', (req, res, next) => {
   prayers.remove({ _id: req.params.id }, {}, (err, numRemoved) => {
     res.status(204).send('Prayer deleted successfully');
-  });
-});
-
-app.get('/events', (req, res, next) => {
-  events.find({}, (err, events) => {
-    if (err) {
-      res.status(500).json({
-        error: err
-      });
-    }
-
-    res.status(200).json({
-      events
-    });
-  });
-});
-
-app.post('/event', (req, res, next) => {
-  const event = {
-    title: req.body.title,
-    imageUrl: '',
-    description: req.body.description,
-    date: req.body.date,
-    deleted: 0,
-    user: req.id,
-    created_at: new Date().toDateString()
-  };
-  events.insert(event, (err, event) => {
-    if (err) {
-      res.status(500).json({
-        error: err
-      });
-    }
-    let added_event = {
-      title: event.title,
-      description: event.description,
-      date: event.date,
-      id: event._id
-    };
-    res.status(201).json(added_event);
-  });
-});
-
-app.put('/event/:id', (req, res, next) => {
-  const new_event = {
-    title: req.body.title,
-    imageUrl: req.body.imageUrl,
-    description: req.body.description,
-    date: req.body.date,
-    deleted: 0,
-    created_at: new Date().toDateString()
-  };
-  events.update({ _id: req.params.id }, new_event, {}, (err, numReplaced) => {
-    if (err) {
-      res.status(500).json({
-        error: err
-      });
-    }
-    let edited_event = {
-      title: new_event.title,
-      description: new_event.description,
-      date: new_event.date,
-      id: new_event._id
-    };
-    res.status(201).json(edited_event);
-  });
-});
-
-app.delete('/event/:id', (req, res, next) => {
-  events.remove({ _id: req.params.id }, {}, (err, numRemoved) => {
-    res.status(204).send('event deleted successfully');
   });
 });
 
