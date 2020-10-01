@@ -14,8 +14,10 @@ app.use(
 
 const events = require('./routes/events');
 const prayers = require('./routes/prayers');
+const adminRoutes = require('./routes/admins');
 app.use('', events);
 app.use('', prayers);
+app.use('/admin', adminRoutes);
 
 app.get('/', (req, res, next) => {
   res.status(200).json({
