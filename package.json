@@ -1,0 +1,22 @@
+{
+  "name": "hossana-youth-backend",
+  "version": "1.0.0",
+  "description": "Backend for hossana-youth",
+  "main": "server.js",
+  "scripts": {
+    "test": "mocha",
+    "lint": "eslint ./"
+  },
+  "devDependencies": {
+    "eslint": "^7.10.0"
+  },
+  "keywords": [
+    "NodeJs",
+    "mutler"
+  ],
+  "author": "Edison Waweru",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}
