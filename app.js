@@ -56,6 +56,26 @@ app.post('/prayer', (req, res, next) => {
   });
 });
 
+app.put('/prayer/:id', (req, res, next) => {
+  const new_prayer = {
+    title: req.body.title,
+    deleted: 0,
+    created_at: new Date().toDateString()
+  };
+  prayers.update({ _id: req.params.id }, new_prayer, {}, (err, numReplaced) => {
+    if (err) {
+      res.status(500).json({
+        error: err
+      });
+    }
+    let edited_prayer = {
+      title: new_prayer.title,
+      id: new_prayer._id
+    };
+    res.status(201).json(edited_prayer);
+  });
+});
+
 app.get('/events', (req, res, next) => {
   events.find({}, (err, events) => {
     if (err) {
