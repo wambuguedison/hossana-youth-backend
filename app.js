@@ -1,6 +1,7 @@
 const express = require('express');
 const cors = require('cors');
 const bodyParser = require('body-parser');
+const nedb = require('nedb');
 
 const app = express();
 app.use(cors());
@@ -11,6 +12,8 @@ app.use(
   })
 );
 
+const prayers = new nedb({ filename: './prayers.db', autoload: true });
+
 app.get('/', (req, res, next) => {
   res.status(200).json({
     message: 'we are the youth'
@@ -18,8 +21,16 @@ app.get('/', (req, res, next) => {
 });
 
 app.get('/prayers', (req, res, next) => {
-  res.status(200).json({
-    prayers: []
+  prayers.find({}, (err, prayers) => {
+    if (err) {
+      res.status(500).json({
+        error: err
+      });
+    }
+
+    res.status(200).json({
+      prayers
+    });
   });
 });
 
