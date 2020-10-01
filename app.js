@@ -76,6 +76,12 @@ app.put('/prayer/:id', (req, res, next) => {
   });
 });
 
+app.delete('/prayer/:id', (req, res, next) => {
+  prayers.remove({ _id: req.params.id }, {}, (err, numRemoved) => {
+    res.status(204).send('Prayer deleted successfully');
+  });
+});
+
 app.get('/events', (req, res, next) => {
   events.find({}, (err, events) => {
     if (err) {
