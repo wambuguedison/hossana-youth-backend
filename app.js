@@ -36,9 +36,24 @@ app.get('/prayers', (req, res, next) => {
 });
 
 app.post('/prayer', (req, res, next) => {
-  console.log(req.body);
-  res.status(201).json({
-    message: 'prayer added successfully!'
+  const prayer = {
+    title: req.body.title,
+    imageUrl: '',
+    deleted: 0,
+    user: req.id,
+    created_at: new Date().toDateString()
+  };
+  prayers.insert(prayer, (err, prayer) => {
+    if (err) {
+      res.status(500).json({
+        error: err
+      });
+    }
+    let added_prayer = {
+      title: prayer.title,
+      id: prayer._id
+    };
+    res.status(201).json(added_prayer);
   });
 });
 
