@@ -16,4 +16,10 @@ app.get('/prayers', (req, res, next) => {
   });
 });
 
+app.get('/events', (req, res, next) => {
+  res.status(200).json({
+    events: []
+  });
+});
+
 module.exports = app;
