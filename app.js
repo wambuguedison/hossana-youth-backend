@@ -13,6 +13,7 @@ app.use(
 );
 
 const prayers = new nedb({ filename: './prayers.db', autoload: true });
+const events = new nedb({ filename: './events.db', autoload: true });
 
 app.get('/', (req, res, next) => {
   res.status(200).json({
@@ -42,8 +43,16 @@ app.post('/prayer', (req, res, next) => {
 });
 
 app.get('/events', (req, res, next) => {
-  res.status(200).json({
-    events: []
+  events.find({}, (err, events) => {
+    if (err) {
+      res.status(500).json({
+        error: err
+      });
+    }
+
+    res.status(200).json({
+      events
+    });
   });
 });
 
