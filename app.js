@@ -1,24 +1,13 @@
 const express = require('express');
+const cors = require('cors');
 
 const app = express();
+app.use(cors());
 
-app.use((req, res, next) => {
-  console.log('Request received!');
-  next();
-});
-
-app.use((req, res, next) => {
-  res.status(201);
-  next();
-});
-
-app.use((req, res, next) => {
-  res.json({ message: 'Your request was successful!' });
-  next();
-});
-
-app.use((req, res, next) => {
-  console.log('Response sent successfully!');
+app.get('/', (req, res, next) => {
+  res.status(200).json({
+    message: 'we are the youth'
+  });
 });
 
 module.exports = app;
