@@ -5,6 +5,7 @@
   "main": "server.js",
   "scripts": {
     "test": "mocha",
+    "start": "nodemon server.js",
     "lint": "eslint ./"
   },
   "devDependencies": {
@@ -17,6 +18,7 @@
   "author": "Edison Waweru",
   "license": "ISC",
   "dependencies": {
+    "nodemon": "^2.0.4",
     "express": "^4.17.1"
   }
 }
