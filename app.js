@@ -96,4 +96,29 @@ app.post('/event', (req, res, next) => {
   });
 });
 
+app.put('/event/:id', (req, res, next) => {
+  const new_event = {
+    title: req.body.title,
+    imageUrl: req.body.imageUrl,
+    description: req.body.description,
+    date: req.body.date,
+    deleted: 0,
+    created_at: new Date().toDateString()
+  };
+  events.update({ _id: req.params.id }, new_event, {}, (err, numReplaced) => {
+    if (err) {
+      res.status(500).json({
+        error: err
+      });
+    }
+    let edited_event = {
+      title: new_event.title,
+      description: new_event.description,
+      date: new_event.date,
+      id: new_event._id
+    };
+    res.status(201).json(edited_event);
+  });
+});
+
 module.exports = app;
