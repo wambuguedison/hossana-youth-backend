@@ -10,4 +10,10 @@ app.get('/', (req, res, next) => {
   });
 });
 
+app.get('/prayers', (req, res, next) => {
+  res.status(200).json({
+    prayers: []
+  });
+});
+
 module.exports = app;
